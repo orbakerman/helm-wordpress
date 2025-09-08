@@ -1,0 +1,26 @@
+namespace: wordpress
+
+images:
+  wordpress: wordpress:6.6-apache
+  mariadb: mariadb:10.11
+
+wordpress:
+  replicas: 2
+  host: wordpress.local
+  servicePort: 80
+  db:
+    host: mariadb.wordpress.svc.cluster.local
+    name: wordpress
+    user: wp
+    passwordSecret: wp-db
+    passwordKey: password
+
+mariadb:
+  replicas: 1
+  storage: 5Gi
+  rootSecret: wp-db
+  rootKey: root
+  dbName: wordpress
+  dbUser: wp
+  dbPasswordSecret: wp-db
+  dbPasswordKey: password
